@@ -1,0 +1,9 @@
+img {
+    width: 150px;
+}
+
+.card {
+    text-align: center;
+    align-items: center;
+    padding-top: 10px;
+}

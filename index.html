@@ -8,7 +8,9 @@
     <!-- CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+
+    <title>Weather Dashboard</title>
 </head>
 
 <body>
@@ -26,18 +28,18 @@
             <div class="row">
                 <div class="col-4">
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="City" aria-label="City"
+                        <input id="searchItem" type="text" class="form-control" placeholder="City" aria-label="City"
                             aria-describedby="search">
                         <div class="input-group-append">
                             <button class="btn btn-outline-secondary" type="button" id="search">Search</button>
                         </div>
                     </div>
-
+                    <p class="text-muted"><u>History</u></p>
                     <button type="button" class="btn btn-light form-control">History</button>
 
                 </div>
-                <div class="col-8">
-                    <img src="https://placehold.it/200x200" class="" style="float: right;" alt="...">
+                <div class="col-8" id="currentDay">
+                    <img src="https://placehold.it/200x200" class="float-right" alt="...">
                     <h2 id="cityName">City Name</h2>
                     <h5 id="date">Date</h5>
                     <h5 id="temp">Temp - </h5>
@@ -49,14 +51,14 @@
 
                 </div>
             </div>
-
-            <hr class="my-4">
+            <!-- FORECAST SECTION -->
+            <hr class="my-4" id="forecastSection">
 
 
             <div class="row">
                 <div class="col">
                     <div class="card">
-                        <img src="https://placehold.it/200x200" class="card-img-top" alt="...">
+                        <img src="https://placehold.it/200x200" class="" alt="...">
                         <div class="card-body">
                             <h5 class="card-title">Forecast</h5>
                             <p class="card-text">Date</p>
@@ -69,7 +71,7 @@
 
                 <div class="col">
                     <div class="card">
-                        <img src="https://placehold.it/200x200" class="card-img-top" alt="...">
+                        <img src="https://placehold.it/200x200" class="" alt="...">
                         <div class="card-body">
                             <h5 class="card-title">Forecast</h5>
                             <p class="card-text">Date</p>
@@ -80,7 +82,7 @@
                 </div>
                 <div class="col">
                     <div class="card">
-                        <img src="https://placehold.it/200x200" class="card-img-top" alt="...">
+                        <img src="https://placehold.it/200x200" class="" alt="...">
                         <div class="card-body">
                             <h5 class="card-title">Forecast</h5>
                             <p class="card-text">Date</p>
@@ -91,7 +93,7 @@
                 </div>
                 <div class="col">
                     <div class="card">
-                        <img src="https://placehold.it/200x200" class="card-img-top" alt="...">
+                        <img src="https://placehold.it/200x200" class="" alt="...">
                         <div class="card-body">
                             <h5 class="card-title">Forecast</h5>
                             <p class="card-text">Date</p>
@@ -102,7 +104,7 @@
                 </div>
                 <div class="col">
                     <div class="card">
-                        <img src="https://placehold.it/200x200" class="card-img-top" alt="...">
+                        <img src="https://placehold.it/200x200" class="" alt="...">
                         <div class="card-body">
                             <h5 class="card-title">Forecast</h5>
                             <p class="card-text">Date</p>
