@@ -1,7 +1,13 @@
 $(document).ready(function () {
-
+    // var history = localStorage.getItem("history")
+    // $(history).push(localStorage.getItem("history"));
     var input = $("#searchItem").val();
     var historySection = document.getElementById("historySection");
+
+    for (let i = 0; i < history.length; i++) {
+        const element = history[i];
+
+    }
 
 
     // CURRENT WEATHER SECTION
@@ -38,9 +44,48 @@ $(document).ready(function () {
 
             var button = document.createElement('button');
             $(button).attr("type", "button")
-            $(button).attr("class", "btn btn-light form-control")
+            $(button).attr("class", "btn btn-light form-control historyBtn")
             button.innerHTML = response.name;
             historySection.appendChild(button);
+            // $(history).push(response.name);
+            // localStorage.setItem("history", history);
+        });
+    });
+
+    // HISTORY SECTION
+    $(".historyBtn").on("click", function () {
+        input = $(this).text();
+        console.log(input);
+
+        var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + input + "&APPID=867846926f7695cf1c8783b6139ee9f8"
+
+        $.ajax({
+            url: queryURL,
+            method: "GET"
+        }).then(function (response) {
+            console.log(" - Current Weather - ");
+            console.log(response);
+            var date = new Date().toLocaleDateString();
+            var weather = response.weather[0].main;
+            var temp = response.main.temp;
+            var convertTemp = ((temp - 273.15) * 9 / 5) + 32;
+            convertTemp = Math.round(convertTemp);
+            var humid = response.main.humidity;
+            var wind = response.wind.speed;
+            wind = wind * 2.236937 //convert to mph
+            wind = Math.round(wind);
+
+            var iconcode = response.weather[0].icon;
+            var iconurl = "http://openweathermap.org/img/wn/" + iconcode + "@2x.png";
+            $('#currentIcon').attr('src', iconurl);
+
+            $("#cityName").text(response.name)
+            $("#date").text(date)
+            $("#weather").text("Weather - " + weather)
+            $("#temp").text("Temperature - " + convertTemp)
+            $("#humid").text("Humidity - " + humid)
+            $("#wind").text("Wind Speed - " + wind + " MPH")
+
         });
     });
 
