@@ -1,13 +1,16 @@
 $(document).ready(function () {
-    // var history = localStorage.getItem("history")
-    // $(history).push(localStorage.getItem("history"));
-    var input = "";
-    var historySection = document.getElementById("historySection");
+    var searchHistory = [];
+    console.log(searchHistory);
 
-    for (let i = 0; i < history.length; i++) {
-        const element = history[i];
+
+    if (localStorage.getItem("searchHistory") != null) {
+        searchHistory.push(localStorage.getItem("searchHistory"));
+        console.log(searchHistory);
 
     }
+
+    var input = "";
+    var historySection = document.getElementById("historySection");
 
 
     // CURRENT WEATHER SECTION
@@ -18,24 +21,24 @@ $(document).ready(function () {
         $.ajax({
             url: queryURL,
             method: "GET"
-        }).then(function (response1) {
+        }).then(function (response) {
             console.log(" - Current Weather - ");
-            console.log(response1);
+            console.log(response);
             var date = new Date().toLocaleDateString();
-            var weather = response1.weather[0].main;
-            var temp = response1.main.temp;
+            var weather = response.weather[0].main;
+            var temp = response.main.temp;
             var convertTemp = ((temp - 273.15) * 9 / 5) + 32;
             convertTemp = Math.round(convertTemp);
-            var humid = response1.main.humidity;
-            var wind = response1.wind.speed;
+            var humid = response.main.humidity;
+            var wind = response.wind.speed;
             wind = wind * 2.236937 //convert to mph
             wind = Math.round(wind);
 
-            var iconcode = response1.weather[0].icon;
+            var iconcode = response.weather[0].icon;
             var iconurl = "http://openweathermap.org/img/wn/" + iconcode + "@2x.png";
             $('#currentIcon').attr('src', iconurl);
 
-            $("#cityName").text(response1.name)
+            $("#cityName").text(response.name)
             $("#date").text(date)
             $("#weather").text("Weather - " + weather)
             $("#temp").text("Temperature - " + convertTemp)
@@ -45,60 +48,144 @@ $(document).ready(function () {
             var button = document.createElement('button');
             $(button).attr("class", "btn btn-light form-control historyBtn")
             $(button).attr("type", "button")
-            button.innerHTML = response1.name;
+            button.innerHTML = response.name;
             historySection.appendChild(button);
-            // $(history).push(response.name);
-            // localStorage.setItem("history", history);
+            searchHistory.push(response.name);
+            localStorage.setItem("searchHistory", searchHistory);
+            var lat = response.coord.lat;
+            var lon = response.coord.lon;
+            var uvURL = "http://api.openweathermap.org/data/2.5/uvi?appid=867846926f7695cf1c8783b6139ee9f8&lat=" + lat + "&lon=" + lon + ""
+            $.ajax({
+                url: uvURL,
+                method: "GET"
+            }).then(function (response2) {
+                $("#uvIndex").text("UV Index - " + response2.value)
+            });
+
+
         });
+
+
+
+        forecastSearch(input)
     });
 
+
+
     // HISTORY SECTION
-    $("#historySection").on("click", "button.historyBtn", function () {
-        console.log("lksudhfgljksduhrglisuerhtgoisudhflgiushdfliguhsdrlihg");
+    if (localStorage.getItem("searchHistory") != null) {
 
-        // if ($(this).hasClass("histoyBtn")) {
+        console.log("kajsdlhfiuhasrpiogunsd;oifng;sodjfng;oisdjf;ogijs");
 
-        console.log(input);
-        input = $(this).text();
-        console.log(input);
+        var array = searchHistory[0].split(",");
+        console.log(array);
+        for (let i = 0; i < array.length; i++) {
+            const element = array[i];
+            var button = document.createElement('button');
+            $(button).attr("class", "btn btn-light form-control historyBtn")
+            $(button).attr("type", "button")
+            button.innerHTML = element;
+            historySection.appendChild(button);
+            console.log(array);
 
+        }
+        input = array.slice(-1)[0]
         var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + input + "&APPID=867846926f7695cf1c8783b6139ee9f8"
 
         $.ajax({
             url: queryURL,
             method: "GET"
-        }).then(function (response2) {
+        }).then(function (response) {
             console.log(" - Current Weather - ");
-            console.log(response2);
+            console.log(response);
             var date = new Date().toLocaleDateString();
-            var weather = response2.weather[0].main;
-            var temp = response2.main.temp;
+            var weather = response.weather[0].main;
+            var temp = response.main.temp;
             var convertTemp = ((temp - 273.15) * 9 / 5) + 32;
             convertTemp = Math.round(convertTemp);
-            var humid = response2.main.humidity;
-            var wind = response2.wind.speed;
+            var humid = response.main.humidity;
+            var wind = response.wind.speed;
             wind = wind * 2.236937 //convert to mph
             wind = Math.round(wind);
 
-            var iconcode = response2.weather[0].icon;
+            var iconcode = response.weather[0].icon;
             var iconurl = "http://openweathermap.org/img/wn/" + iconcode + "@2x.png";
             $('#currentIcon').attr('src', iconurl);
 
-            $("#cityName").text(response2.name)
+            $("#cityName").text(response.name)
             $("#date").text(date)
             $("#weather").text("Weather - " + weather)
             $("#temp").text("Temperature - " + convertTemp)
             $("#humid").text("Humidity - " + humid)
             $("#wind").text("Wind Speed - " + wind + " MPH")
 
+
+            localStorage.setItem("searchHistory", searchHistory);
+            var lat = response.coord.lat;
+            var lon = response.coord.lon;
+            var uvURL = "http://api.openweathermap.org/data/2.5/uvi?appid=867846926f7695cf1c8783b6139ee9f8&lat=" + lat + "&lon=" + lon + ""
+            $.ajax({
+                url: uvURL,
+                method: "GET"
+            }).then(function (response2) {
+                $("#uvIndex").text("UV Index - " + response2.value)
+            });
+
+
+
         });
-        // }
+        forecastSearch(input)
+    }
+
+    $("#historySection").on("click", "button.historyBtn", function () {
+        input = $(this).text();
+
+        var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + input + "&APPID=867846926f7695cf1c8783b6139ee9f8"
+
+        $.ajax({
+            url: queryURL,
+            method: "GET"
+        }).then(function (response) {
+            var date = new Date().toLocaleDateString();
+            var weather = response.weather[0].main;
+            var temp = response.main.temp;
+            var convertTemp = ((temp - 273.15) * 9 / 5) + 32;
+            convertTemp = Math.round(convertTemp);
+            var humid = response.main.humidity;
+            var wind = response.wind.speed;
+            wind = wind * 2.236937 //convert to mph
+            wind = Math.round(wind);
+
+            var iconcode = response.weather[0].icon;
+            var iconurl = "http://openweathermap.org/img/wn/" + iconcode + "@2x.png";
+            $('#currentIcon').attr('src', iconurl);
+
+            $("#cityName").text(response.name)
+            $("#date").text(date)
+            $("#weather").text("Weather - " + weather)
+            $("#temp").text("Temperature - " + convertTemp)
+            $("#humid").text("Humidity - " + humid)
+            $("#wind").text("Wind Speed - " + wind + " MPH")
+
+            var lat = response.coord.lat;
+            var lon = response.coord.lon;
+            var uvURL = "http://api.openweathermap.org/data/2.5/uvi?appid=867846926f7695cf1c8783b6139ee9f8&lat=" + lat + "&lon=" + lon + ""
+            $.ajax({
+                url: uvURL,
+                method: "GET"
+            }).then(function (response2) {
+                $("#uvIndex").text("UV Index - " + response2.value)
+            });
+
+        });
+        forecastSearch(input);
     });
 
 
     // FORECAST SECTION
-    $("#search").on("click", function () {
-        input = $("#searchItem").val();
+    function forecastSearch(input) {
+        $("#forecastSection").empty();
+
         var queryURL = "http://api.openweathermap.org/data/2.5/forecast?q=" + input + "&APPID=867846926f7695cf1c8783b6139ee9f8"
         $.ajax({
             url: queryURL,
@@ -116,15 +203,39 @@ $(document).ready(function () {
                 //calls weather
                 console.log(element.weather[0].main);
 
+                var date = new Date().toLocaleDateString();
+                var weather = element.weather[0].main;
+                var temp = element.main.temp;
+                var convertTemp = ((temp - 273.15) * 9 / 5) + 32;
+                convertTemp = Math.round(convertTemp);
+                var humid = element.main.humidity;
+                var wind = element.wind.speed;
+                wind = wind * 2.236937 //convert to mph
+                wind = Math.round(wind);
+
+                var iconcode = element.weather[0].icon;
+                var iconurl = "http://openweathermap.org/img/wn/" + iconcode + "@2x.png";
+
+                var codeBlock = "<div class='col'>" +
+                    "<div class='card'>" +
+                    "<img src='" + iconurl + "' class='' alt='...'>" +
+                    "<div class='card-body'>" +
+                    "<h5 class='card-title'>" + date + "</h5>" +
+                    "<p class='card-text'>" + weather + "</p>" +
+                    "<p class='card-text'>" + temp + "</p>" +
+                    "<p class='card-text'>" + humid + "</p>" +
+                    "</div>" +
+                    "</div>" +
+                    "</div>";
+
+
+                document.getElementById("forecastSection").innerHTML += codeBlock;
 
             }
 
             // ((kelvinTemp - 273.15) * 9/5) + 32
 
         });
-
         console.log(input);
-
-    });
-
+    }
 });
