@@ -16,7 +16,7 @@ $(document).ready(function () {
     // CURRENT WEATHER SECTION
     $("#search").click(function () {
         input = $("#searchItem").val();
-        var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + input + "&APPID=867846926f7695cf1c8783b6139ee9f8"
+        var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + input + "&APPID=867846926f7695cf1c8783b6139ee9f8"
 
         $.ajax({
             url: queryURL,
@@ -35,7 +35,7 @@ $(document).ready(function () {
             wind = Math.round(wind);
 
             var iconcode = response.weather[0].icon;
-            var iconurl = "http://openweathermap.org/img/wn/" + iconcode + "@2x.png";
+            var iconurl = "https://openweathermap.org/img/wn/" + iconcode + "@2x.png";
             $('#currentIcon').attr('src', iconurl);
 
             $("#cityName").text(response.name)
@@ -54,7 +54,7 @@ $(document).ready(function () {
             localStorage.setItem("searchHistory", searchHistory);
             var lat = response.coord.lat;
             var lon = response.coord.lon;
-            var uvURL = "http://api.openweathermap.org/data/2.5/uvi?appid=867846926f7695cf1c8783b6139ee9f8&lat=" + lat + "&lon=" + lon + ""
+            var uvURL = "https://api.openweathermap.org/data/2.5/uvi?appid=867846926f7695cf1c8783b6139ee9f8&lat=" + lat + "&lon=" + lon + ""
             $.ajax({
                 url: uvURL,
                 method: "GET"
@@ -90,7 +90,7 @@ $(document).ready(function () {
 
         }
         input = array.slice(-1)[0]
-        var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + input + "&APPID=867846926f7695cf1c8783b6139ee9f8"
+        var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + input + "&APPID=867846926f7695cf1c8783b6139ee9f8"
 
         $.ajax({
             url: queryURL,
@@ -109,7 +109,7 @@ $(document).ready(function () {
             wind = Math.round(wind);
 
             var iconcode = response.weather[0].icon;
-            var iconurl = "http://openweathermap.org/img/wn/" + iconcode + "@2x.png";
+            var iconurl = "https://openweathermap.org/img/wn/" + iconcode + "@2x.png";
             $('#currentIcon').attr('src', iconurl);
 
             $("#cityName").text(response.name)
@@ -123,7 +123,7 @@ $(document).ready(function () {
             localStorage.setItem("searchHistory", searchHistory);
             var lat = response.coord.lat;
             var lon = response.coord.lon;
-            var uvURL = "http://api.openweathermap.org/data/2.5/uvi?appid=867846926f7695cf1c8783b6139ee9f8&lat=" + lat + "&lon=" + lon + ""
+            var uvURL = "https://api.openweathermap.org/data/2.5/uvi?appid=867846926f7695cf1c8783b6139ee9f8&lat=" + lat + "&lon=" + lon + ""
             $.ajax({
                 url: uvURL,
                 method: "GET"
@@ -140,7 +140,7 @@ $(document).ready(function () {
     $("#historySection").on("click", "button.historyBtn", function () {
         input = $(this).text();
 
-        var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + input + "&APPID=867846926f7695cf1c8783b6139ee9f8"
+        var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + input + "&APPID=867846926f7695cf1c8783b6139ee9f8"
 
         $.ajax({
             url: queryURL,
@@ -157,7 +157,7 @@ $(document).ready(function () {
             wind = Math.round(wind);
 
             var iconcode = response.weather[0].icon;
-            var iconurl = "http://openweathermap.org/img/wn/" + iconcode + "@2x.png";
+            var iconurl = "https://openweathermap.org/img/wn/" + iconcode + "@2x.png";
             $('#currentIcon').attr('src', iconurl);
 
             $("#cityName").text(response.name)
@@ -169,7 +169,7 @@ $(document).ready(function () {
 
             var lat = response.coord.lat;
             var lon = response.coord.lon;
-            var uvURL = "http://api.openweathermap.org/data/2.5/uvi?appid=867846926f7695cf1c8783b6139ee9f8&lat=" + lat + "&lon=" + lon + ""
+            var uvURL = "https://api.openweathermap.org/data/2.5/uvi?appid=867846926f7695cf1c8783b6139ee9f8&lat=" + lat + "&lon=" + lon + ""
             $.ajax({
                 url: uvURL,
                 method: "GET"
@@ -186,7 +186,7 @@ $(document).ready(function () {
     function forecastSearch(input) {
         $("#forecastSection").empty();
 
-        var queryURL = "http://api.openweathermap.org/data/2.5/forecast?q=" + input + "&APPID=867846926f7695cf1c8783b6139ee9f8"
+        var queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + input + "&APPID=867846926f7695cf1c8783b6139ee9f8"
         $.ajax({
             url: queryURL,
             method: "GET"
@@ -214,7 +214,7 @@ $(document).ready(function () {
                 wind = Math.round(wind);
 
                 var iconcode = element.weather[0].icon;
-                var iconurl = "http://openweathermap.org/img/wn/" + iconcode + "@2x.png";
+                var iconurl = "https://openweathermap.org/img/wn/" + iconcode + "@2x.png";
 
                 var codeBlock = "<div class='col'>" +
                     "<div class='card'>" +

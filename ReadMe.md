@@ -31,4 +31,4 @@ Simply input a city name and you will be given the current weather and 5 day for
 
 Link to example readme:
 
-https://github.com/IzzleNizzle/ReadoutAssistant
+https://braydon-nelson.github.io/06-Weather-Dashboard/
